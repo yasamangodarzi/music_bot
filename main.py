@@ -1,8 +1,7 @@
 from telegram.ext import *
 import Responses as rep
 from Constant import API_KEY
-from youtubesearchpython import *
-import urllib.request
+
 
 print("bot started...")
 def start_command(update, context):

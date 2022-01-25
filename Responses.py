@@ -1,18 +1,18 @@
-import telebot.apihelper
-from youtubesearchpython import *
 import requests
 import pymongo
 myclient = pymongo.MongoClient()
 mydb = myclient["Music_bot"]
-mycol = mydb["songs"]
+mycollection = mydb["songs"]
 def compare(a, b):
     return [c for c in a if c.isalpha()] == [c for c in b if c.isalpha()]
 def work(input_text):
     user_message=str(input_text).lower()
-    #musiclist = mycol.find()
-    musiclist = mycol.find({"name":{"$regex":user_message}})
-    lid = []
-    for x in musiclist:
+    music_list_db = mycollection.find({"name" : {"$regex":user_message}})
+
+    list_show = []
+    for x in music_list_db:
+        print(x["name"])
+        return x["address"]
         if compare(x["name"],user_message):
             print(x["name"] + x["address"])
             return x["address"]
@@ -22,20 +22,15 @@ def work(input_text):
     Title = response["Result"]
     answer = ""
     for x in Title:
-         y = x["Title"]
-         yg = x["Link"]
-         mydict = {"name": str(y), "address": str(yg)}
-        # print(y)
-        # print(yg)
-         best=y+"\n"+yg+"\n"
-         lid.append(best)
-         mycol.insert_one(mydict)
-         #answer = answer + y + "\n" + yg + "\n"
+         titer = x["Title"]
+         url = x["Link"]
+         my_dictionary = {"name": str(titer), "address": str(url)}
+         find_name_song=titer+"\n"+url+"\n"
+         list_show.append(find_name_song)
+         mycollection.insert_one(my_dictionary)
     for x in range(3):
-        answer = answer + lid[x]
-
+        answer = answer + list_show[x]
     print(answer)
+    if answer=="":
+     return "we can not find the song you are looking for..."
     return answer
-   # print(answer)
-
-
