@@ -10,8 +10,8 @@ def start_command(update, context):
 
 
 def help_command(update, context):
-    update.message.reply_text("please enter your request in this format:\nجدید+اسم خواننده +بانام+اسم اهنگ")
-
+    update.message.reply_text("please enter your request:"
+                              "")
 
 def handle_command(update, context):
     text = str(update.message.text).lower()
